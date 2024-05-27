@@ -4,7 +4,7 @@
   "description": "This is ebook api project",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon server.ts"
+    "dev": "nodemon server.ts"
   },
   "keywords": [
     "rest",
@@ -14,9 +14,13 @@
   "author": "Sahil <sahilbalhra0@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.3.0",
     "@types/node": "^20.12.12",
+    "eslint": "9.x",
+    "globals": "^15.3.0",
     "nodemon": "^3.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.10.0"
   }
 }
