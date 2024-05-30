@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
-import { User } from "../types/userTypes";
+import { User, UserDocument } from "../types/userTypes";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "../config/config";
 
-const userSchema = new Schema<User>(
+const userSchema = new Schema<UserDocument>(
     {
         name: {
             type: String,
@@ -29,7 +29,7 @@ const userSchema = new Schema<User>(
     { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre<UserDocument>("save", async function (next) {
     if (!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
@@ -64,6 +64,6 @@ userSchema.methods.generateRefreshToken = function () {
     );
 };
 
-const userModel = model<User>("User", userSchema);
+const userModel = model<UserDocument>("User", userSchema);
 
 export default userModel;
