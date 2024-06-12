@@ -18,7 +18,6 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
             parsedToken,
             config.access_token_secret as string
         );
-        console.log("decoded", decoded);
         const _req = req as AuthRequest;
         _req.userId = decoded?._id;
 
