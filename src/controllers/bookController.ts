@@ -62,10 +62,10 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateBook = async (req: Request, res: Response, next: NextFunction) => {
-    const { title, genre, description, id } = req.body;
+    const { title, genre, description, _id } = req.body;
 
     try {
-        const book = await bookModel.findById({ _id: id });
+        const book = await bookModel.findById({ _id: _id });
 
         if (!book) {
             return next(createHttpError(404, "Book not found"));
@@ -155,7 +155,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
 
         const updatedBook = await bookModel.findOneAndUpdate(
             {
-                _id: id,
+                _id: _id,
             },
             {
                 title: title,
@@ -269,7 +269,9 @@ const getBook = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
     try {
-        const book = await bookModel.findById({ _id: id });
+        const book = await bookModel
+            .findById({ _id: id })
+            .populate("author", "name");
 
         if (!book) {
             return next(createHttpError(404, "Book not found"));

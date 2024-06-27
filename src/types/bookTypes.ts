@@ -1,3 +1,4 @@
+import { Review } from "./reviewTypes";
 import { User } from "./userTypes";
 import { Document } from "mongoose";
 
@@ -9,4 +10,5 @@ export interface Book extends Document {
     genre: string;
     cover_image: string;
     file: string;
+    reviews: Review[];
 }

@@ -25,6 +25,13 @@ const userSchema = new Schema<UserDocument>(
         refreshToken: {
             type: String,
         },
+        role: {
+            type: String,
+        },
+        purchases: {
+            type: [Schema.Types.ObjectId],
+            ref: "Purchases",
+        },
     },
     { timestamps: true }
 );

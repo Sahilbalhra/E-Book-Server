@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import userModel from "../models/userModel";
 import { UserDocument } from "../types/userTypes";
+import { verify } from "jsonwebtoken";
+import { config } from "../config/config";
 
 interface Tokens {
     accessToken: string;
@@ -142,4 +145,64 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-export { createUser, userLogin };
+const updateAccessToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const incomingRefreshToken =
+        req.cookies.refreshToken || req.body.refreshToken;
+
+    if (!incomingRefreshToken) {
+        const error = createHttpError(401, "unauthorized request.");
+        return next(error);
+    }
+
+    try {
+        const decodedToken: any = verify(
+            incomingRefreshToken,
+            config.refresh_token_secret as string
+        );
+
+        const user = await userModel.findById(decodedToken?._id);
+        if (!user) {
+            const error = createHttpError(
+                400,
+                "User with this email does not exist."
+            );
+            return next(error);
+        }
+
+        const options = {
+            httpOnly: true,
+            secure: true,
+        };
+        const tokens = await generateAccessTokenAndRefreshToken(
+            user._id as string,
+            next
+        );
+
+        if (!tokens) {
+            return; // `next` was already called in case of error
+        }
+        const { accessToken, refreshToken } = tokens;
+
+        return res
+            .status(200)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken, options)
+            .json({
+                status: 200,
+                data: { accessToken, refreshToken },
+                message: "User logged in successfully",
+            });
+    } catch (error: any) {
+        const err = createHttpError(
+            500,
+            error?.message ? error.message : "Something went wrong"
+        );
+        return next(err);
+    }
+};
+
+export { createUser, userLogin, updateAccessToken };
