@@ -9,6 +9,7 @@ export interface Book extends Document {
     author: User;
     genre: string;
     cover_image: string;
+    price: number;
     file: string;
     reviews: Review[];
 }

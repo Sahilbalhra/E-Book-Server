@@ -43,6 +43,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/books", bookRouter);
+app.use("/api/review", bookRouter);
 
 //Global Error Handler
 app.use(globalErrorHandler);

@@ -20,6 +20,10 @@ const bookSchema = new Schema<Book>(
             type: String,
             required: true,
         },
+        price: {
+            type: Number,
+            required: true,
+        },
         file: {
             type: String,
             required: true,
@@ -28,11 +32,11 @@ const bookSchema = new Schema<Book>(
             type: String,
             required: true,
         },
-        reviews: {
-            type: [Schema.Types.ObjectId],
-            ref: "Review",
-            default: [],
-        },
+        // reviews: {
+        //     type: [Schema.Types.ObjectId],
+        //     ref: "Review",
+        //     default: [],
+        // },
     },
     { timestamps: true }
 );

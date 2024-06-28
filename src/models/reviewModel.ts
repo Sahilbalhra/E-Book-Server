@@ -3,9 +3,14 @@ import { Review } from "../types/reviewTypes";
 
 const reviewSchema = new Schema<Review>(
     {
-        user: {
+        user_id: {
             type: Schema.Types.ObjectId,
             ref: "User",
+            required: true,
+        },
+        book_id: {
+            type: Schema.Types.ObjectId,
+            ref: "Book",
             required: true,
         },
         rating: {

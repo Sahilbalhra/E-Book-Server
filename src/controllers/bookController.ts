@@ -7,7 +7,7 @@ import { AuthRequest } from "../middleware/authenticate";
 import uploadOnCloudinary from "../utils/uploadFilesOnCloudinary";
 
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
-    const { title, genre, description } = req.body;
+    const { title, genre, description, price } = req.body;
 
     try {
         const files = req.files as {
@@ -43,6 +43,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
             title,
             description,
             genre,
+            price,
             author: _req.userId,
             cover_image: uploadResult?.secure_url,
             file: bookFileUploadResult?.secure_url,
@@ -62,7 +63,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateBook = async (req: Request, res: Response, next: NextFunction) => {
-    const { title, genre, description, _id } = req.body;
+    const { title, genre, description, _id, price } = req.body;
 
     try {
         const book = await bookModel.findById({ _id: _id });
@@ -161,7 +162,8 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
                 title: title,
                 description: description,
                 genre: genre,
-                coverImage: completeCoverImage
+                price,
+                cover_image: completeCoverImage
                     ? completeCoverImage
                     : book.cover_image,
                 file: pdfFile ? pdfFile : book.file,

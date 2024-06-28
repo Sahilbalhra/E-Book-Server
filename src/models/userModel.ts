@@ -4,6 +4,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "../config/config";
 
+enum UserRole {
+    User = "User",
+    Admin = "Admin",
+    Seller = "Seller",
+}
+
 const userSchema = new Schema<UserDocument>(
     {
         name: {
@@ -27,6 +33,8 @@ const userSchema = new Schema<UserDocument>(
         },
         role: {
             type: String,
+            enum: Object.values(UserRole),
+            default: UserRole.User,
         },
         purchases: {
             type: [Schema.Types.ObjectId],
