@@ -6,7 +6,7 @@ const reviewRouter = express.Router();
 
 //routes
 
-reviewRouter.post("/:id", authenticate, addReview);
-reviewRouter.get("/", authenticate, getReviewByBookId);
+reviewRouter.post("/:book_id", authenticate, addReview);
+reviewRouter.get("/:book_id", authenticate, getReviewByBookId);
 
 export default reviewRouter;

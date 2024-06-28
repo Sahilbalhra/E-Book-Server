@@ -4,6 +4,8 @@ import globalErrorHandler from "./middleware/globalErrorHandler";
 import userRouter from "./routes/userRouter";
 import bookRouter from "./routes/bookRouter";
 import { config } from "./config/config";
+import reviewRouter from "./routes/reviewRouter";
+import purchaseRouter from "./routes/purchaseRouter";
 
 const allowedOrigins: string[] = [
     config.frontendDomain || "",
@@ -43,7 +45,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/books", bookRouter);
-app.use("/api/review", bookRouter);
+app.use("/api/review", reviewRouter);
+app.use("/api/order", purchaseRouter);
 
 //Global Error Handler
 app.use(globalErrorHandler);

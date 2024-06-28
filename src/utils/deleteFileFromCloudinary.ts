@@ -11,12 +11,8 @@ const extractPublicIdFromUrl = (url: string): string => {
 export const deleteFileFromCloudinaryByUrl = (url: string): Promise<string> => {
     const publicId = extractPublicIdFromUrl(url);
 
-    console.log("publicId", publicId);
-
     return new Promise((resolve, reject) => {
         cloudinary.uploader.destroy(publicId, (error, result) => {
-            console.log("error", error);
-            console.log("result", result);
             if (error) {
                 reject(`Failed to delete file: ${error.message}`);
             } else if (result.result !== "ok") {

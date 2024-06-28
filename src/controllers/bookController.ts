@@ -55,7 +55,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
             status: 200,
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         // return next(createHttpError(500, "Error while uploading the files."));
         const error = createHttpError(500, "Error while uploading the files.");
         return next(error);
@@ -177,7 +177,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
             status: 200,
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         // return next(createHttpError(500, "Error while uploading the files."));
         const error = createHttpError(500, "Something went wrong.");
         return next(error);
@@ -250,7 +250,7 @@ const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
             });
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return next(createHttpError(500, "Something went wrong."));
     }
 };

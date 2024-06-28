@@ -43,7 +43,7 @@ const addReview = async (req: Request, res: Response, next: NextFunction) => {
             status: 200,
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         // return next(createHttpError(500, "Error while uploading the files."));
         const error = createHttpError(500, "Error while Adding the Review.");
         return next(error);
@@ -72,7 +72,7 @@ const getReviewByBookId = async (
             message: "Request Success Successfully .",
         });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         // return next(createHttpError(500, "Error while uploading the files."));
         const error = createHttpError(500, "Error while getting the Review.");
         return next(error);
