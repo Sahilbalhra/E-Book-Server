@@ -34,7 +34,7 @@ bookRouter.patch(
 );
 
 bookRouter.delete("/:id", authenticate, deleteBook);
-bookRouter.get("/:id", getBook);
-bookRouter.get("/", getBooks);
+bookRouter.get("/:id", authenticate, getBook);
+bookRouter.get("/", authenticate, getBooks);
 
 export default bookRouter;

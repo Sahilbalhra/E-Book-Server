@@ -8,7 +8,12 @@ export interface AuthRequest extends Request {
 }
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const token = req.header("Authorization");
+    const platform = req.header("X-Platform");
+    if (platform !== "ADMIN") {
+        return next();
+    }
     if (!token) {
+        console.log("inside else state token");
         return next(createHttpError(401, "Authorization token is required."));
     }
 
