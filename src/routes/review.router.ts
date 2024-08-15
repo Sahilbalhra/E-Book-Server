@@ -1,6 +1,10 @@
 import express from "express";
 import authenticate from "../middleware/authenticate";
-import { addReview, getReviewByBookId } from "../controllers/review.controller";
+import {
+    addReview,
+    getReviewByBookId,
+    deleteReviewById,
+} from "../controllers/review.controller";
 
 const reviewRouter = express.Router();
 
@@ -8,5 +12,6 @@ const reviewRouter = express.Router();
 
 reviewRouter.post("/:book_id", authenticate, addReview);
 reviewRouter.get("/:book_id", authenticate, getReviewByBookId);
+reviewRouter.delete("/:review_id", authenticate, deleteReviewById);
 
 export default reviewRouter;

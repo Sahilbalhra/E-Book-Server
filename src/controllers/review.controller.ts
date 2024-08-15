@@ -131,4 +131,28 @@ const getReviewByBookId = async (
     }
 };
 
-export { addReview, getReviewByBookId };
+const deleteReviewById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { review_id } = req.params;
+    try {
+        const deletedReview = await reviewModel.findByIdAndDelete(review_id);
+
+        if (!deletedReview) {
+            return next(createHttpError(404, "Review not found"));
+        }
+
+        res.status(200).json({
+            status: 200,
+            message: "Review deleted successfully",
+        });
+    } catch (err) {
+        console.error(err);
+        const error = createHttpError(500, "Error while deleting the Review.");
+        return next(error);
+    }
+};
+
+export { addReview, getReviewByBookId, deleteReviewById };
