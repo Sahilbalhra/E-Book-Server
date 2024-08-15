@@ -1,11 +1,11 @@
 import express from "express";
 import cors, { CorsOptions } from "cors";
 import globalErrorHandler from "./middleware/globalErrorHandler";
-import userRouter from "./routes/userRouter";
-import bookRouter from "./routes/bookRouter";
+import userRouter from "./routes/user.router";
+import bookRouter from "./routes/book.router";
 import { config } from "./config/config";
-import reviewRouter from "./routes/reviewRouter";
-import purchaseRouter from "./routes/purchaseRouter";
+import reviewRouter from "./routes/review.router";
+import purchaseRouter from "./routes/purchase.router";
 
 const allowedOrigins: string[] = [
     config.frontendDomain || "",
@@ -32,11 +32,6 @@ const corsOptions: CorsOptions = {
 
 const app = express();
 app.use(cors(corsOptions));
-// app.use(
-//     cors({
-//         origin: config.frontendDomain,
-//     })
-// );
 app.use(express.json());
 
 app.get("/", (req, res) => {

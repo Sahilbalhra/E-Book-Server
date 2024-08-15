@@ -8,7 +8,7 @@ const startServer = async () => {
     const port = config.port;
 
     app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+        console.warn(`Server is running on port ${port}`);
     });
 };
 

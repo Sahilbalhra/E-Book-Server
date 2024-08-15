@@ -1,19 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthRequest } from "../middleware/authenticate";
+import mongoose from "mongoose";
 import createHttpError from "http-errors";
-import userModel from "../models/userModel";
-import bookModel from "../models/bookModel";
-import reviewModel from "../models/reviewModel";
+import userModel from "../models/user.model";
+import bookModel from "../models/book.model";
+import reviewModel from "../models/review.model";
+
+interface ReviewData {
+    _id: number;
+    count: number;
+    totalSum: number;
+}
 
 const addReview = async (req: Request, res: Response, next: NextFunction) => {
-    const { rating, comment } = req.body;
-
+    const { rating, comment, title } = req.body;
     const { book_id } = req.params;
 
     try {
         const _req = req as AuthRequest;
         const user_id = _req.userId;
-
         if (!user_id) {
             return next(createHttpError(401, "User not authenticated"));
         }
@@ -33,12 +38,19 @@ const addReview = async (req: Request, res: Response, next: NextFunction) => {
         const review = await reviewModel.create({
             user_id: user_id,
             book_id: book_id,
+            title: title,
             rating: rating,
             comment: comment,
         });
-
         res.status(201).json({
-            data: review,
+            data: {
+                ...review,
+                user_id: {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                },
+            },
             message: "Review Added Successfully .",
             status: 200,
         });
@@ -66,9 +78,49 @@ const getReviewByBookId = async (
             .find({ book_id })
             .populate("user_id", "name email");
 
+        const objectId = new mongoose.Types.ObjectId(book_id);
+
+        const reviewsData: ReviewData[] = await reviewModel.aggregate([
+            { $match: { book_id: objectId } },
+            {
+                $group: {
+                    _id: "$rating",
+                    count: { $sum: 1 },
+                    totalSum: { $sum: "$rating" },
+                },
+            },
+            { $sort: { _id: -1 } },
+        ]);
+
+        let totalRatings = 0;
+        let totalSum = 0;
+
+        const ratings: {
+            rating: number;
+            count: number;
+        }[] = [];
+
+        reviewsData.forEach(({ _id, count, totalSum: sum }) => {
+            ratings.push({
+                rating: _id,
+                count: count,
+            });
+            totalRatings += count;
+            totalSum += sum;
+        });
+
+        const averageRating = Number(
+            Number(totalRatings > 0 ? totalSum / totalRatings : 0).toFixed(2)
+        );
+
         res.status(200).json({
             status: 200,
-            data: reviews,
+            data: {
+                reviews: reviews,
+                ratings: ratings,
+                totalRatings: totalRatings,
+                averageRating: averageRating,
+            },
             message: "Request Success Successfully .",
         });
     } catch (err) {

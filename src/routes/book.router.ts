@@ -7,7 +7,7 @@ import {
     deleteBook,
     getBooks,
     getBook,
-} from "../controllers/bookController";
+} from "../controllers/book.controller";
 
 const bookRouter = express.Router();
 

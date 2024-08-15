@@ -1,5 +1,5 @@
-import { Review } from "./reviewTypes";
-import { User } from "./userTypes";
+import { Review } from "./review.types";
+import { User } from "./user.types";
 import { Document } from "mongoose";
 
 export interface Book extends Document {

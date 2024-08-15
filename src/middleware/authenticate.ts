@@ -9,16 +9,20 @@ export interface AuthRequest extends Request {
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const token = req.header("Authorization");
     const platform = req.header("X-Platform");
-    if (platform !== "ADMIN") {
+    if (
+        platform !== "ADMIN" &&
+        (req.baseUrl.includes("book") ||
+            (req.method === "GET" && req.baseUrl.includes("review")))
+    ) {
         return next();
     }
     if (!token) {
-        console.log("inside else state token");
         return next(createHttpError(401, "Authorization token is required."));
     }
 
     try {
         const parsedToken = token.split(" ")[1];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const decoded: any = verify(
             parsedToken,
             config.access_token_secret as string

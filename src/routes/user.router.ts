@@ -3,7 +3,7 @@ import {
     createUser,
     updateAccessToken,
     userLogin,
-} from "../controllers/userController";
+} from "../controllers/user.controller";
 
 const userRouter = express.Router();
 

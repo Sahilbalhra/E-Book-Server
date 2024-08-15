@@ -1,6 +1,6 @@
-import { Book } from "./bookTypes";
+import { Book } from "./book.types";
 import { Document } from "mongoose";
-import { User } from "./userTypes";
+import { User } from "./user.types";
 
 export interface Purchases extends Document {
     _id: string;

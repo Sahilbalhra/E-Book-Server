@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
-import userModel from "../models/userModel";
-import { UserDocument } from "../types/userTypes";
+import userModel from "../models/user.model";
+import { UserDocument } from "../types/user.types";
 import { verify } from "jsonwebtoken";
 import { config } from "../config/config";
 
@@ -49,7 +49,6 @@ const generateAccessTokenAndRefreshToken = async (
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password } = req.body;
-
     if (!name || !email || !password) {
         const error = createHttpError(400, "All fields are required");
         return next(error);

@@ -1,7 +1,7 @@
 import path from "node:path";
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
-import bookModel from "../models/bookModel";
+import bookModel from "../models/book.model";
 import { deleteFileFromCloudinaryByUrl } from "../utils/deleteFileFromCloudinary";
 import { AuthRequest } from "../middleware/authenticate";
 import uploadOnCloudinary from "../utils/uploadFilesOnCloudinary";
@@ -38,6 +38,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
             "book-pdfs",
             "pdf"
         );
+
         const _req = req as AuthRequest;
         const newBook = await bookModel.create({
             title,

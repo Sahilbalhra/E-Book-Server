@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Review } from "../types/reviewTypes";
+import { Review } from "../types/review.types";
 
 const reviewSchema = new Schema<Review>(
     {
@@ -11,6 +11,10 @@ const reviewSchema = new Schema<Review>(
         book_id: {
             type: Schema.Types.ObjectId,
             ref: "Book",
+            required: true,
+        },
+        title: {
+            type: String,
             required: true,
         },
         rating: {

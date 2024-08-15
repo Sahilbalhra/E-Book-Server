@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
-import { Purchases } from "./purchasesTypes";
+import { Purchases } from "./purchases.types";
+
 export interface User {
     _id: string;
     name: string;

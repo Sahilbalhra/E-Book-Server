@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthRequest } from "../middleware/authenticate";
-import purchasesModel from "../models/purchasesModel";
-import bookModel from "../models/bookModel";
-import userModel from "../models/userModel";
+import purchasesModel from "../models/purchases.model";
+import bookModel from "../models/book.model";
+import userModel from "../models/user.model";
 import createHttpError from "http-errors";
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
