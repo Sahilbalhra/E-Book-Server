@@ -5,7 +5,9 @@ import { config } from "../config/config";
 
 export interface AuthRequest extends Request {
     userId: string;
+    isAdmin: boolean;
 }
+
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const token = req.header("Authorization");
     const platform = req.header("X-Platform");
@@ -29,6 +31,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
         );
         const _req = req as AuthRequest;
         _req.userId = decoded?._id;
+        _req.isAdmin = platform === "ADMIN" ? true : false;
 
         next();
     } catch (err) {

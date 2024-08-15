@@ -6,6 +6,7 @@ import bookRouter from "./routes/book.router";
 import { config } from "./config/config";
 import reviewRouter from "./routes/review.router";
 import purchaseRouter from "./routes/purchase.router";
+import dashboardRouter from "./routes/dashboard.router";
 
 const allowedOrigins: string[] = [
     config.frontendDomain || "",
@@ -42,6 +43,7 @@ app.use("/api/users", userRouter);
 app.use("/api/books", bookRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/order", purchaseRouter);
+app.use("/api/dashboard", dashboardRouter);
 
 //Global Error Handler
 app.use(globalErrorHandler);

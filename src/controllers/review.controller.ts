@@ -43,14 +43,7 @@ const addReview = async (req: Request, res: Response, next: NextFunction) => {
             comment: comment,
         });
         res.status(201).json({
-            data: {
-                ...review,
-                user_id: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                },
-            },
+            data: review,
             message: "Review Added Successfully .",
             status: 200,
         });
