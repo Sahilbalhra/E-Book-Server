@@ -13,7 +13,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const platform = req.header("X-Platform");
     if (
         platform !== "ADMIN" &&
-        (req.baseUrl.includes("book") ||
+        ((req.baseUrl.includes("book") && req.method === "GET") ||
             (req.method === "GET" && req.baseUrl.includes("review")))
     ) {
         return next();

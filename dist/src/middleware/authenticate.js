@@ -10,7 +10,7 @@ const authenticate = (req, res, next) => {
     const token = req.header("Authorization");
     const platform = req.header("X-Platform");
     if (platform !== "ADMIN" &&
-        (req.baseUrl.includes("book") ||
+        ((req.baseUrl.includes("book") && req.method === "GET") ||
             (req.method === "GET" && req.baseUrl.includes("review")))) {
         return next();
     }

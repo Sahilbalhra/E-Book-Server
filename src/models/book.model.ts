@@ -22,7 +22,8 @@ const bookSchema = new Schema<Book>(
         },
         price: {
             type: Number,
-            required: true,
+            default: 0,
+            required: false,
         },
         file: {
             type: String,
