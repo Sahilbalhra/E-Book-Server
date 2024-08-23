@@ -53,4 +53,4 @@ USER node
 EXPOSE 5513
 
 # Start the application
-CMD ["node", "dist/index.js"]  # Adjust the path to your actual entry point
+CMD ["node", "dist/server.js"]  # Adjust the path to your actual entry point
